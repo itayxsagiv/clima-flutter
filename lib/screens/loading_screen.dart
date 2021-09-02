@@ -19,7 +19,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     String url = 'https://samples.openweathermap.org/data/2.5/weather?'
         'lat=${location.latitude}&lon=${location.longitude}'
         '&appid=$apiKey';
-    print(url);
     NetworkHelper networkHelper = NetworkHelper(url);
     var decodedData = await networkHelper.getData();
     Navigator.push(
@@ -34,11 +33,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
+    getLocationData();
   }
 
   @override
   Widget build(BuildContext context) {
-    getLocationData();
     return Scaffold(
       body: Center(
         child: SpinKitDoubleBounce(
