@@ -16,19 +16,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
-
-    NetworkHelper networkHelper =
-        NetworkHelper('https://samples.openweathermap.org/data/2.5/weather?'
-            'lat=${location.latitude}&lon=${location.longitude}&appid=$apiKey');
+    String url = 'https://samples.openweathermap.org/data/2.5/weather?'
+        'lat=${location.latitude}&lon=${location.longitude}'
+        '&appid=$apiKey';
+    print(url);
+    NetworkHelper networkHelper = NetworkHelper(url);
     var decodedData = await networkHelper.getData();
-    double temperature = decodedData['main']['temp'];
-    int condition = decodedData['weather'][0]['id'];
-    String cityName = decodedData['name'];
-    print('$temperature $condition $cityName');
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LocationScreen(),
+          builder: (context) => LocationScreen(
+            locationWeather: decodedData,
+          ),
         ));
   }
 
